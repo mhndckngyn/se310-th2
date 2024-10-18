@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using se310_th2.Migrations;
+using se310_th2.Models;
 
 namespace se310_th2.Context;
 

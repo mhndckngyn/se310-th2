@@ -2,7 +2,6 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using se310_th2.Context;
-using se310_th2.Migrations;
 using se310_th2.Models;
 using X.PagedList;
 
@@ -35,6 +34,14 @@ public class HomeController : Controller
         PagedList<TDanhMucSp> pagedProducts = new PagedList<TDanhMucSp>(products, pageNumber, PAGE_SIZE);
         ViewBag.maLoai = maLoai;
         return View(pagedProducts);
+    }
+
+    public IActionResult ChiTietSanPham(string maSp)
+    {
+        var sanPham = db.TDanhMucSps.SingleOrDefault(x => x.MaSp == maSp);
+        var anhSanPham = db.TAnhSps.Where(x => x.MaSp == maSp).ToList();
+        ViewBag.anhSanPham = anhSanPham;
+        return View(sanPham);
     }
 
     public IActionResult Privacy()

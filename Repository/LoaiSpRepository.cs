@@ -1,5 +1,5 @@
 using se310_th2.Context;
-using se310_th2.Migrations;
+using se310_th2.Models;
 
 namespace se310_th2.Repository;
 

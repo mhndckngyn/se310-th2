@@ -27,6 +27,16 @@ public class HomeController : Controller
         return View(pagedProducts);
     }
 
+    public IActionResult SanPhamTheoLoai(string maLoai, int? page)
+    {
+        const int PAGE_SIZE = 8;
+        int pageNumber = (int)(page is null or < 0 ? 1 : page);
+        var products = db.TDanhMucSps.AsNoTracking().Where(x => x.MaLoai == maLoai).OrderBy(x => x.TenSp);
+        PagedList<TDanhMucSp> pagedProducts = new PagedList<TDanhMucSp>(products, pageNumber, PAGE_SIZE);
+        ViewBag.maLoai = maLoai;
+        return View(pagedProducts);
+    }
+
     public IActionResult Privacy()
     {
         return View();

@@ -1,7 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+using se310_th2.Context;
+using se310_th2.Repository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+var connectionString = builder.Configuration.GetConnectionString("MyDbContext");
+builder.Services.AddDbContext<MyDbContext>(x => x.UseSqlServer(connectionString));
+builder.Services.AddScoped<ILoaiSpRepository, LoaiSpRepository>();
 
 var app = builder.Build();
 

@@ -17,15 +17,15 @@
                     <div class="product__details__pic__slider owl-carousel">
                         @foreach (var anhSp in Model.AnhSps)
                         {
-                        <img data-imgbigurl="@Url.Content("../ProductImages/" + anhSp.TenFileAnh)"
-                             src="@Url.Content("../ProductImages/" + anhSp.TenFileAnh)" alt="">
+                            <img data-imgbigurl="@Url.Content("../ProductImages/" + anhSp.TenFileAnh)"
+                                 src="@Url.Content("../ProductImages/" + anhSp.TenFileAnh)" alt="">
                         }
                     </div>
                 </div>
             </div>
             <div class="col-lg-6 col-md-6">
                 <div class="product__details__text">
-                    <h3>@Model.TenSp</h3>
+                    <h3>@Model.DanhMucSp.TenSp</h3>
                     <div class="product__details__rating">
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>

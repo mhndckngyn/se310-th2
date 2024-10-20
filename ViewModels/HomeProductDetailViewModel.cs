@@ -6,6 +6,4 @@ public class HomeProductDetailViewModel
 {
     public TDanhMucSp DanhMucSp { get; set; }
     public List<TAnhSp> AnhSps { get; set; }
-    
-    
 }

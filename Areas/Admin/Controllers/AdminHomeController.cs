@@ -12,7 +12,8 @@ namespace se310_th2.Areas.Admin.Controllers;
 [Route("admin/homeadmin")]
 public class AdminHomeController : Controller
 {
-    private MyDbContext db = new MyDbContext(); 
+    private MyDbContext db = new MyDbContext();
+
     // GET
     [Route("")]
     [Route("index")]
@@ -20,7 +21,7 @@ public class AdminHomeController : Controller
     {
         return View();
     }
-    
+
     [Route("danhmucsanpham")]
     public IActionResult DanhMucSanPham(int? page)
     {
@@ -54,9 +55,10 @@ public class AdminHomeController : Controller
             db.SaveChanges();
             return RedirectToAction("DanhMucSanPham");
         }
+
         return View(sanPham);
     }
-    
+
     [Route("suasanpham")]
     [HttpGet]
     public IActionResult SuaSanPham(string maSp)
@@ -81,6 +83,33 @@ public class AdminHomeController : Controller
             db.SaveChanges();
             return RedirectToAction("DanhMucSanPham");
         }
+
         return View(sanPham);
+    }
+
+    [Route("xoasanpham")]
+    [HttpGet]
+    public IActionResult XoaSanPham(string maSp)
+    {
+        var hasChiTietSanPham = db.TChiTietSanPhams.Any(x => x.MaSp == maSp);
+        if (hasChiTietSanPham)
+        {
+            TempData["Message"] = "Xoá không thành công. Sản phẩm tồn tại trong hoá đơn";
+            return RedirectToAction("DanhMucSanPham");
+        }
+        
+        // delete product image records
+        var anhSanPhams = db.TAnhSps.Where(x => x.MaSp == maSp).ToList();
+        if (anhSanPhams.Count > 0)
+        {
+            db.RemoveRange(anhSanPhams);
+        }
+        // delete product
+        var product = db.TDanhMucSps.Find(maSp);
+        var productName = product?.TenSp;
+        db.Remove(db.TDanhMucSps.Find(maSp));
+        db.SaveChanges();
+        TempData["Message"] = $"Sản phẩm {productName} đã được xoá";
+        return RedirectToAction("DanhMucSanPham");
     }
 }

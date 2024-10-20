@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using se310_th2.Context;
 using se310_th2.Models;
+using se310_th2.ViewModels;
 using X.PagedList;
 
 namespace se310_th2.Controllers;
@@ -42,6 +43,14 @@ public class HomeController : Controller
         var anhSanPham = db.TAnhSps.Where(x => x.MaSp == maSp).ToList();
         ViewBag.anhSanPham = anhSanPham;
         return View(sanPham);
+    }
+
+    public IActionResult ChiTietSanPhamViewMdl(string maSp)
+    {
+        var sanPham = db.TDanhMucSps.SingleOrDefault(x => x.MaSp == maSp);
+        var anhSanPham = db.TAnhSps.Where(x => x.MaSp == maSp).ToList();
+        var homeProductDetailViewModel = new HomeProductDetailViewModel { DanhMucSp = sanPham, AnhSps = anhSanPham };
+        return View(homeProductDetailViewModel);
     }
 
     public IActionResult Privacy()

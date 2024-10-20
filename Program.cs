@@ -9,6 +9,8 @@ builder.Services.AddControllersWithViews();
 
 var connectionString = builder.Configuration.GetConnectionString("MyDbContext");
 builder.Services.AddDbContext<MyDbContext>(x => x.UseSqlServer(connectionString));
+
+// Dependency Injection container: When ILoaiSpRepository is needed, it provides an instance of LoaiSpRepository
 builder.Services.AddScoped<ILoaiSpRepository, LoaiSpRepository>();
 
 var app = builder.Build();

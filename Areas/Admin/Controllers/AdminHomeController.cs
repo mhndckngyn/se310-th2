@@ -55,5 +55,32 @@ public class AdminHomeController : Controller
             return RedirectToAction("DanhMucSanPham");
         }
         return View(sanPham);
-    } 
+    }
+    
+    [Route("suasanpham")]
+    [HttpGet]
+    public IActionResult SuaSanPham(string maSp)
+    {
+        ViewBag.MaChatLieu = new SelectList(db.TChatLieus.ToList(), "MaChatLieu", "ChatLieu");
+        ViewBag.MaHangSx = new SelectList(db.THangSxes.ToList(), "MaHangSx", "HangSx");
+        ViewBag.MaNuocSx = new SelectList(db.TQuocGia.ToList(), "MaNuoc", "TenNuoc");
+        ViewBag.MaLoai = new SelectList(db.TLoaiSps.ToList(), "MaLoai", "Loai");
+        ViewBag.MaDt = new SelectList(db.TLoaiDts.ToList(), "MaDt", "TenLoai");
+        var sanPham = db.TDanhMucSps.Find(maSp);
+        return View(sanPham);
+    }
+
+    [Route("suasanpham")]
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult SuaSanPham(TDanhMucSp sanPham)
+    {
+        if (ModelState.IsValid)
+        {
+            db.Entry(sanPham).State = EntityState.Modified; // or db.Update(sanPham);
+            db.SaveChanges();
+            return RedirectToAction("DanhMucSanPham");
+        }
+        return View(sanPham);
+    }
 }

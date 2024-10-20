@@ -45,7 +45,7 @@
             <td>@item.GiaNhoNhat</td>
             <td>@item.GiaLonNhat</td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.MaSp">Edit</a> |
+                <a asp-area="Admin" asp-controller="AdminHome" asp-action="SuaSanPham" asp-route-maSp="@item.MaSp">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.MaSp">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.MaSp">Delete</a>
             </td>

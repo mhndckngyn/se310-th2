@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using se310_th2.Context;
 using se310_th2.Models;
+using se310_th2.Models.Authentication;
 using se310_th2.ViewModels;
 using X.PagedList;
 
@@ -18,21 +19,22 @@ public class HomeController : Controller
         _logger = logger;
     }
 
+    [Authentication]
     public IActionResult Index(int? page)
     {
-        const int PAGE_SIZE = 12;
-        int pageNumber = (int)(page is null or < 0 ? 1 : page);
+        const int pageSize = 12;
+        var pageNumber = (int)(page is null or < 0 ? 1 : page);
         var products = db.TDanhMucSps.AsNoTracking().OrderBy(x => x.TenSp);
-        PagedList<TDanhMucSp> pagedProducts = new PagedList<TDanhMucSp>(products, pageNumber, PAGE_SIZE);
+        var pagedProducts = new PagedList<TDanhMucSp>(products, pageNumber, pageSize);
         return View(pagedProducts);
     }
 
     public IActionResult SanPhamTheoLoai(string maLoai, int? page)
     {
-        const int PAGE_SIZE = 8;
-        int pageNumber = (int)(page is null or < 0 ? 1 : page);
+        const int pageSize = 8;
+        var pageNumber = (int)(page is null or < 0 ? 1 : page);
         var products = db.TDanhMucSps.AsNoTracking().Where(x => x.MaLoai == maLoai).OrderBy(x => x.TenSp);
-        PagedList<TDanhMucSp> pagedProducts = new PagedList<TDanhMucSp>(products, pageNumber, PAGE_SIZE);
+        var pagedProducts = new PagedList<TDanhMucSp>(products, pageNumber, pageSize);
         ViewBag.maLoai = maLoai;
         return View(pagedProducts);
     }

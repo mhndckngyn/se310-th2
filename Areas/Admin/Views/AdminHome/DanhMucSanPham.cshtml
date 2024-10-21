@@ -60,6 +60,6 @@
     @Html.PagedListPager(Model, page => Url.Action("DanhMucSanPham", new { page = page }), new PagedListRenderOptions()
     {
         LiElementClasses = new List<string>{"page-item"},
-        PageClasses = new List<string> {"page-link"}
+        PageClasses = new List<string> {"page-link"},
     })
 </div>

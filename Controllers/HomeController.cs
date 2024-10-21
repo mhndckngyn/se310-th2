@@ -19,7 +19,7 @@ public class HomeController : Controller
         _logger = logger;
     }
 
-    [Authentication]
+    // [Authentication] // Needs to login before access this
     public IActionResult Index(int? page)
     {
         const int pageSize = 12;

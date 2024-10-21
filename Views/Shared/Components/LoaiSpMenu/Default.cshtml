@@ -1,4 +1,5 @@
 @model IEnumerable<se310_th2.Models.TLoaiSp>
+
 <div class="col-lg-3">
     <div class="hero__categories">
         <div class="hero__categories__all">
@@ -8,8 +9,53 @@
         <ul>
             @foreach (var item in Model)
             {
-                <li><a asp-controller="Home" asp-action="SanPhamTheoLoai" asp-route-maLoai="@item.MaLoai">@item.Loai</a></li>
+                var getUrl = "http://localhost:5244/api/productapi/" + item.MaLoai;
+                <li><a style="cursor: pointer;" onclick="showProductByCategory('@getUrl')">@item.Loai</a></li>
+                @* <li><a asp-controller="Home" asp-action="SanPhamTheoLoai" asp-route-maLoai="@item.MaLoai">@item.Loai</a></li> *@
             }
         </ul>
     </div>
 </div>
+
+<script>
+    function getProductContent(product) {
+        let productContent = "";
+        let linkImage = `../ProductImages/${$.trim(product.anhDaiDien)}`
+        console.log(product);
+        
+        productContent += '<div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">'
+        productContent += '<div class="featured__item">'
+        productContent += `<div class="featured__item__pic set-bg" data-setbg=${linkImage} style="background-image: url(&quot;${linkImage}&quot;);">`
+        productContent += '<ul class="featured__item__pic__hover">'
+        productContent += '<li><a href="#"><i class="fa fa-heart"></i></a></li>'
+        productContent += '<li><a href="#"><i class="fa fa-retweet"></i></a></li>'
+        productContent += '<li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>'
+        productContent += '</ul>'
+        productContent += '</div>'
+        productContent += '<div class="featured__item__text">'
+        productContent += `<h6><a href="/Home/ChiTietSanPham?maSp='${$.trim(product.maSp)}">${product.tenSp}</a></h6>`
+        productContent += `<h5>${product.giaNhoNhat.toString()}</h5>`
+        productContent += '</div>'
+        productContent += '</div>'
+        productContent += '</div>'
+        
+        return productContent;
+    }
+    
+    function showProductByCategory(getUrl) {
+        let content = "";
+        $.ajax({
+            type: "GET",
+            url: getUrl,
+            dataType: "json",
+            success: function(data) {
+                $.each(data, (key, val) => content += getProductContent(val));
+                $('#productList').html(content);
+            },
+            Error: function(xhr) {
+                alert(xhr.responseText);
+            }
+        });
+    }
+
+</script>
